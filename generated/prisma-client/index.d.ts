@@ -14,7 +14,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
 
 export interface Exists {
-  user: (where?: UserWhereInput) => Promise<boolean>;
+  url: (where?: UrlWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -36,47 +36,47 @@ export interface Prisma {
    * Queries
    */
 
-  user: (where: UserWhereUniqueInput) => UserPromise;
-  users: (args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
+  url: (where: UrlWhereUniqueInput) => UrlPromise;
+  urls: (args?: {
+    where?: UrlWhereInput;
+    orderBy?: UrlOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<User>;
-  usersConnection: (args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
+  }) => FragmentableArray<Url>;
+  urlsConnection: (args?: {
+    where?: UrlWhereInput;
+    orderBy?: UrlOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => UserConnectionPromise;
+  }) => UrlConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
    * Mutations
    */
 
-  createUser: (data: UserCreateInput) => UserPromise;
-  updateUser: (args: {
-    data: UserUpdateInput;
-    where: UserWhereUniqueInput;
-  }) => UserPromise;
-  updateManyUsers: (args: {
-    data: UserUpdateManyMutationInput;
-    where?: UserWhereInput;
+  createUrl: (data: UrlCreateInput) => UrlPromise;
+  updateUrl: (args: {
+    data: UrlUpdateInput;
+    where: UrlWhereUniqueInput;
+  }) => UrlPromise;
+  updateManyUrls: (args: {
+    data: UrlUpdateManyMutationInput;
+    where?: UrlWhereInput;
   }) => BatchPayloadPromise;
-  upsertUser: (args: {
-    where: UserWhereUniqueInput;
-    create: UserCreateInput;
-    update: UserUpdateInput;
-  }) => UserPromise;
-  deleteUser: (where: UserWhereUniqueInput) => UserPromise;
-  deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
+  upsertUrl: (args: {
+    where: UrlWhereUniqueInput;
+    create: UrlCreateInput;
+    update: UrlUpdateInput;
+  }) => UrlPromise;
+  deleteUrl: (where: UrlWhereUniqueInput) => UrlPromise;
+  deleteManyUrls: (where?: UrlWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -86,9 +86,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  user: (
-    where?: UserSubscriptionWhereInput
-  ) => UserSubscriptionPayloadSubscription;
+  url: (
+    where?: UrlSubscriptionWhereInput
+  ) => UrlSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -99,31 +99,31 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type UserOrderByInput =
+export type UrlOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
+  | "config_ASC"
+  | "config_DESC"
+  | "description_ASC"
+  | "description_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserCreateInput {
-  name: String;
+export interface UrlCreateInput {
+  config: String;
+  description?: String;
 }
 
-export interface UserUpdateInput {
-  name?: String;
+export interface UrlUpdateInput {
+  config?: String;
+  description?: String;
 }
 
-export interface UserUpdateManyMutationInput {
-  name?: String;
-}
-
-export interface UserWhereInput {
+export interface UrlWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -138,37 +138,64 @@ export interface UserWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  AND?: UserWhereInput[] | UserWhereInput;
-  OR?: UserWhereInput[] | UserWhereInput;
-  NOT?: UserWhereInput[] | UserWhereInput;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  config?: String;
+  config_not?: String;
+  config_in?: String[] | String;
+  config_not_in?: String[] | String;
+  config_lt?: String;
+  config_lte?: String;
+  config_gt?: String;
+  config_gte?: String;
+  config_contains?: String;
+  config_not_contains?: String;
+  config_starts_with?: String;
+  config_not_starts_with?: String;
+  config_ends_with?: String;
+  config_not_ends_with?: String;
+  description?: String;
+  description_not?: String;
+  description_in?: String[] | String;
+  description_not_in?: String[] | String;
+  description_lt?: String;
+  description_lte?: String;
+  description_gt?: String;
+  description_gte?: String;
+  description_contains?: String;
+  description_not_contains?: String;
+  description_starts_with?: String;
+  description_not_starts_with?: String;
+  description_ends_with?: String;
+  description_not_ends_with?: String;
+  AND?: UrlWhereInput[] | UrlWhereInput;
+  OR?: UrlWhereInput[] | UrlWhereInput;
+  NOT?: UrlWhereInput[] | UrlWhereInput;
 }
 
-export interface UserSubscriptionWhereInput {
+export interface UrlUpdateManyMutationInput {
+  config?: String;
+  description?: String;
+}
+
+export interface UrlSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  node?: UrlWhereInput;
+  AND?: UrlSubscriptionWhereInput[] | UrlSubscriptionWhereInput;
+  OR?: UrlSubscriptionWhereInput[] | UrlSubscriptionWhereInput;
+  NOT?: UrlSubscriptionWhereInput[] | UrlSubscriptionWhereInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
+export type UrlWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
@@ -176,20 +203,21 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface AggregateUser {
-  count: Int;
+export interface UrlEdge {
+  node: Url;
+  cursor: String;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface UrlEdgePromise extends Promise<UrlEdge>, Fragmentable {
+  node: <T = UrlPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface UrlEdgeSubscription
+  extends Promise<AsyncIterator<UrlEdge>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = UrlSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BatchPayload {
@@ -208,103 +236,73 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface UserPreviousValues {
+export interface Url {
   id: ID_Output;
-  name: String;
+  createdAt: DateTimeOutput;
+  config: String;
+  description?: String;
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
+export interface UrlPromise extends Promise<Url>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  config: () => Promise<String>;
+  description: () => Promise<String>;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
+export interface UrlSubscription
+  extends Promise<AsyncIterator<Url>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  config: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserSubscriptionPayload {
+export interface UrlSubscriptionPayload {
   mutation: MutationType;
-  node: User;
+  node: Url;
   updatedFields: String[];
-  previousValues: UserPreviousValues;
+  previousValues: UrlPreviousValues;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface UrlSubscriptionPayloadPromise
+  extends Promise<UrlSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
+  node: <T = UrlPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  previousValues: <T = UrlPreviousValuesPromise>() => T;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface UrlSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UrlSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
+  node: <T = UrlSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  previousValues: <T = UrlPreviousValuesSubscription>() => T;
 }
 
-export interface User {
-  id: ID_Output;
-  name: String;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserConnection {
+export interface UrlConnection {
   pageInfo: PageInfo;
-  edges: UserEdge[];
+  edges: UrlEdge[];
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface UrlConnectionPromise
+  extends Promise<UrlConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<UrlEdge>>() => T;
+  aggregate: <T = AggregateUrlPromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface UrlConnectionSubscription
+  extends Promise<AsyncIterator<UrlConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UrlEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUrlSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -330,12 +328,61 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface AggregateUrl {
+  count: Int;
+}
+
+export interface AggregateUrlPromise
+  extends Promise<AggregateUrl>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUrlSubscription
+  extends Promise<AsyncIterator<AggregateUrl>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UrlPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  config: String;
+  description?: String;
+}
+
+export interface UrlPreviousValuesPromise
+  extends Promise<UrlPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  config: () => Promise<String>;
+  description: () => Promise<String>;
+}
+
+export interface UrlPreviousValuesSubscription
+  extends Promise<AsyncIterator<UrlPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  config: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+}
+
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
 
-export type Long = string;
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -344,14 +391,16 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+DateTime scalar input type, allowing Date
 */
-export type Int = number;
+export type DateTimeInput = Date | string;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+DateTime scalar output type, which is always a string
 */
-export type Boolean = boolean;
+export type DateTimeOutput = string;
+
+export type Long = string;
 
 /**
  * Model Metadata
@@ -359,7 +408,7 @@ export type Boolean = boolean;
 
 export const models: Model[] = [
   {
-    name: "User",
+    name: "Url",
     embedded: false
   }
 ];

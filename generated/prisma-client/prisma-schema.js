@@ -1,5 +1,5 @@
 module.exports = {
-        typeDefs: /* GraphQL */ `type AggregateUser {
+        typeDefs: /* GraphQL */ `type AggregateUrl {
   count: Int!
 }
 
@@ -7,15 +7,17 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 scalar Long
 
 type Mutation {
-  createUser(data: UserCreateInput!): User!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createUrl(data: UrlCreateInput!): Url!
+  updateUrl(data: UrlUpdateInput!, where: UrlWhereUniqueInput!): Url
+  updateManyUrls(data: UrlUpdateManyMutationInput!, where: UrlWhereInput): BatchPayload!
+  upsertUrl(where: UrlWhereUniqueInput!, create: UrlCreateInput!, update: UrlUpdateInput!): Url!
+  deleteUrl(where: UrlWhereUniqueInput!): Url
+  deleteManyUrls(where: UrlWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -36,79 +38,88 @@ type PageInfo {
 }
 
 type Query {
-  user(where: UserWhereUniqueInput!): User
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  url(where: UrlWhereUniqueInput!): Url
+  urls(where: UrlWhereInput, orderBy: UrlOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Url]!
+  urlsConnection(where: UrlWhereInput, orderBy: UrlOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UrlConnection!
   node(id: ID!): Node
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  url(where: UrlSubscriptionWhereInput): UrlSubscriptionPayload
 }
 
-type User {
+type Url {
   id: ID!
-  name: String!
+  createdAt: DateTime!
+  config: String!
+  description: String
 }
 
-type UserConnection {
+type UrlConnection {
   pageInfo: PageInfo!
-  edges: [UserEdge]!
-  aggregate: AggregateUser!
+  edges: [UrlEdge]!
+  aggregate: AggregateUrl!
 }
 
-input UserCreateInput {
-  name: String!
+input UrlCreateInput {
+  config: String!
+  description: String
 }
 
-type UserEdge {
-  node: User!
+type UrlEdge {
+  node: Url!
   cursor: String!
 }
 
-enum UserOrderByInput {
+enum UrlOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
   createdAt_ASC
   createdAt_DESC
+  config_ASC
+  config_DESC
+  description_ASC
+  description_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
 
-type UserPreviousValues {
+type UrlPreviousValues {
   id: ID!
-  name: String!
+  createdAt: DateTime!
+  config: String!
+  description: String
 }
 
-type UserSubscriptionPayload {
+type UrlSubscriptionPayload {
   mutation: MutationType!
-  node: User
+  node: Url
   updatedFields: [String!]
-  previousValues: UserPreviousValues
+  previousValues: UrlPreviousValues
 }
 
-input UserSubscriptionWhereInput {
+input UrlSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: UserWhereInput
-  AND: [UserSubscriptionWhereInput!]
-  OR: [UserSubscriptionWhereInput!]
-  NOT: [UserSubscriptionWhereInput!]
+  node: UrlWhereInput
+  AND: [UrlSubscriptionWhereInput!]
+  OR: [UrlSubscriptionWhereInput!]
+  NOT: [UrlSubscriptionWhereInput!]
 }
 
-input UserUpdateInput {
-  name: String
+input UrlUpdateInput {
+  config: String
+  description: String
 }
 
-input UserUpdateManyMutationInput {
-  name: String
+input UrlUpdateManyMutationInput {
+  config: String
+  description: String
 }
 
-input UserWhereInput {
+input UrlWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -123,26 +134,48 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  AND: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  NOT: [UserWhereInput!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  config: String
+  config_not: String
+  config_in: [String!]
+  config_not_in: [String!]
+  config_lt: String
+  config_lte: String
+  config_gt: String
+  config_gte: String
+  config_contains: String
+  config_not_contains: String
+  config_starts_with: String
+  config_not_starts_with: String
+  config_ends_with: String
+  config_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [UrlWhereInput!]
+  OR: [UrlWhereInput!]
+  NOT: [UrlWhereInput!]
 }
 
-input UserWhereUniqueInput {
+input UrlWhereUniqueInput {
   id: ID
 }
 `
